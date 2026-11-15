@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ClipboardPaste, X, Image as ImageIcon, Film, AlertCircle } from 'lucide-react';
-import { StoryboardScene, ColumnMapping } from '../types/storyboard';
+import { StoryboardScene } from '../types/storyboard';
 
 interface PastePromptsModalProps {
   isOpen: boolean;
@@ -21,7 +21,7 @@ const splitPrompts = (value: string): string[] => {
     ? labelled
     : trimmed.split(/\n\s*\n+/).map(part => part.trim()).filter(Boolean);
 
-  return blocks.map((block, index) =>
+  return blocks.map((block) =>
     block.replace(/^\s*(?:scene\s*)?\d{1,3}\s*[:.)-]\s*/i, '').trim()
   ).filter(Boolean);
 };
