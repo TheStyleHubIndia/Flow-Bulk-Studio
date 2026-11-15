@@ -1,0 +1,6 @@
+{
+  "name": "Flow Bulk Studio",
+  "description": "Mobile-first dark cinematic storyboard studio for managing Google Flow image and video generation queues from Excel and CSV scripts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
