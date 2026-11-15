@@ -12,12 +12,14 @@ import { FlowAssistantModal } from './components/FlowAssistantModal';
 import { ColumnMapperModal } from './components/ColumnMapperModal';
 import { SceneEditModal } from './components/SceneEditModal';
 import { BulkActionModal } from './components/BulkActionModal';
+import { PastePromptsModal } from './components/PastePromptsModal';
 import { Toast } from './components/Toast';
-import { Sparkles, Play } from 'lucide-react';
+import { Sparkles, Play, ClipboardPaste } from 'lucide-react';
 
 export default function App() {
   const store = useStoryboardStore();
   const [isBulkQueueOpen, setIsBulkQueueOpen] = useState(false);
+  const [isPastePromptsOpen, setIsPastePromptsOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-amber-500/20 selection:text-amber-300">
@@ -39,6 +41,15 @@ export default function App() {
 
       {/* Floating Action Buttons for Flow Assistant / Queue Runner */}
       <div className="fixed bottom-20 right-3 sm:right-6 z-20 flex flex-col items-end gap-2 pointer-events-none">
+        <button
+          onClick={() => setIsPastePromptsOpen(true)}
+          className="pointer-events-auto flex items-center gap-1.5 p-2 sm:px-3 sm:py-2 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-cyan-300 border border-cyan-500/30 shadow-xl backdrop-blur-md text-xs font-bold transition-all active:scale-95"
+          aria-label="Paste up to 75 prompts"
+          title="Paste up to 75 prompts"
+        >
+          <ClipboardPaste className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Paste 75</span>
+        </button>
         <button
           onClick={() => setIsBulkQueueOpen(true)}
           className="pointer-events-auto flex items-center gap-1.5 p-2 sm:px-3 sm:py-2 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-amber-400 border border-amber-500/30 shadow-xl backdrop-blur-md text-xs font-bold transition-all active:scale-95"
@@ -64,6 +75,11 @@ export default function App() {
       <ColumnMapperModal store={store} />
       <SceneEditModal store={store} />
       <BulkActionModal store={store} isOpen={isBulkQueueOpen} onClose={() => setIsBulkQueueOpen(false)} />
+      <PastePromptsModal
+        isOpen={isPastePromptsOpen}
+        onClose={() => setIsPastePromptsOpen(false)}
+        onImport={(scenes) => store.loadImportedProject(scenes, 'pasted-prompts.json', 'json', store.project.mapping)}
+      />
 
       {/* Android Chrome Bottom Navigation Bar */}
       <BottomNav store={store} />
